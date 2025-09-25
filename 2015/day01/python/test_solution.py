@@ -37,7 +37,7 @@ class TestSolution(unittest.TestCase):
     
     def test_from_test_input_file(self):
         # Test with the content from input-test-a.txt
-        with open('input-test-a.txt', 'r') as file:
+        with open('../data/input-test-a.txt', 'r') as file:
             test_input = file.read().strip()
         # input-test-a.txt contains '(())' which should result in floor 0
         self.assertEqual(calculate_floor(test_input), 0)

@@ -56,12 +56,12 @@ func main() {
 
 	// Part A: Calculate final floor
 	finalFloor := calculateFloor(instructions)
-	fmt.Printf("Santa ends up on floor %d\\n", finalFloor)
+	fmt.Printf("Santa ends up on floor %d\n", finalFloor)
 
 	// Part B: Find position where Santa first enters basement
 	basementPos := findBasementPosition(instructions)
 	if basementPos != -1 {
-		fmt.Printf("The first character that causes Santa to enter the basement is at position %d\\n", basementPos)
+		fmt.Printf("The first character that causes Santa to enter the basement is at position %d\n", basementPos)
 	} else {
 		fmt.Println("Santa never enters the basement")
 	}

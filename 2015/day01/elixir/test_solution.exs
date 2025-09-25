@@ -1,3 +1,5 @@
+# Process.put(:elixir_test_mode, true)
+Code.require_file("solution.exs", __DIR__)
 ExUnit.start()
 
 defmodule SolutionTest do

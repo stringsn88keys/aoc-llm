@@ -58,13 +58,13 @@ defmodule Solution do
 
       {:error, _reason} ->
         IO.puts("#{input_file} not found. Please create the file with the puzzle input.")
-        IO.puts("Example usage: calculate_floor('(((') returns #{calculate_floor('(((')}")
-        IO.puts("Example usage: find_basement_position('()())') returns #{find_basement_position('()())')}")
+        IO.puts("Example usage: calculate_floor(\"(((\") returns #{calculate_floor("(((")}") 
+        IO.puts("Example usage: find_basement_position(\"()())\") returns #{find_basement_position("()())")}")
     end
   end
 end
 
-# Run main function if this file is executed directly
-if :filename.basename(__ENV__.file) == "solution.exs" do
+# Run main function if this file is executed directly (not when required by tests)
+if :filename.basename(__ENV__.file) == "solution.exs" and !Process.get(:elixir_test_mode) do
   Solution.main(System.argv())
 end

@@ -46,8 +46,8 @@ def main
     end
   rescue File::NotFoundError
     puts "#{input_file} not found. Please create the file with the puzzle input."
-    puts "Example usage: calculate_floor('(((') returns #{calculate_floor('(((')}"
-    puts "Example usage: find_basement_position('()())') returns #{find_basement_position('()())')}"
+    puts "Example usage: calculate_floor('(((') returns #{calculate_floor("(((")}"
+    puts "Example usage: find_basement_position('()())') returns #{find_basement_position("()())")}"
   end
 end
 
