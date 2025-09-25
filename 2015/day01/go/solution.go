@@ -10,9 +10,10 @@ import (
 func calculateFloor(instructions string) int {
 	floor := 0
 	for _, char := range instructions {
-		if char == '(' {
+		switch char {
+		case '(':
 			floor++
-		} else if char == ')' {
+		case ')':
 			floor--
 		}
 	}
@@ -23,9 +24,10 @@ func calculateFloor(instructions string) int {
 func findBasementPosition(instructions string) int {
 	floor := 0
 	for i, char := range instructions {
-		if char == '(' {
+		switch char {
+		case '(':
 			floor++
-		} else if char == ')' {
+		case ')':
 			floor--
 		}
 

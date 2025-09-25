@@ -8,7 +8,12 @@ This document defines the standards and requirements for implementing Advent of 
 #### Forth (Gforth)
 - **Framework**: Custom test assertions
 - **Execution**: `gforth test_solution.fs`
-- **Success**: Exit code 0, all assertions passmultiple programming languages.
+- **Success**: Exit code 0, all assertions pass
+
+#### Rust
+- **Framework**: Built-in `#[test]` and `cargo test`
+- **Execution**: `cargo test`
+- **Success**: All tests pass, proper test outputmultiple programming languages.
 
 ## Supported Languages
 
@@ -24,6 +29,7 @@ This document defines the standards and requirements for implementing Advent of 
 - **Haskell** - Pure functional programming
 - **Lua** - Lightweight scripting
 - **Forth** - Stack-based programming with Gforth
+- **Rust** - Systems programming with memory safety
 
 ## Directory Structure
 
@@ -55,6 +61,7 @@ YYYY/dayNN/
 - **Haskell**: `solution.hs`
 - **Lua**: `solution.lua`
 - **Forth**: `solution.fs`
+- **Rust**: `main.rs` (in Cargo project)
 
 ### Test Files
 - **Python**: `test_solution.py`
@@ -66,6 +73,7 @@ YYYY/dayNN/
 - **Haskell**: `test_solution.hs`
 - **Lua**: `test_solution.lua`
 - **Forth**: `test_solution.fs`
+- **Rust**: `src/lib.rs` + `tests/` (with Cargo)
 
 ## Input File Handling
 
@@ -212,6 +220,12 @@ Each test file must include:
 - **Style**: Standard Forth conventions
 - **Words**: Use standard and Gforth-specific words
 
+### Rust
+- **Version**: Rust 1.70+
+- **Style**: Follow Rust conventions (rustfmt)
+- **Project**: Use Cargo for dependency management
+- **Safety**: Leverage Rust's ownership system
+
 ## Quality Standards
 
 ### Code Quality
@@ -266,6 +280,7 @@ The test runner checks for these language runtimes:
 - `ghc`, `runhaskell` - Glasgow Haskell Compiler
 - `lua` - Lua interpreter
 - `gforth` - Gforth interpreter
+- `rustc`, `cargo` - Rust compiler and build tool
 
 ### Installation Verification
 Missing runtimes are reported but don't fail the test suite. This allows:
