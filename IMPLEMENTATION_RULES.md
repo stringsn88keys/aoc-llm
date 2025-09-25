@@ -3,7 +3,12 @@
 This document defines the standards and requirements for implementing Advent of Code solution#### Lua
 - **Framework**: Custom test framework
 - **Execution**: `lua test_solution.lua`
-- **Success**: Exit code 0, all tests passmultiple programming languages.
+- **Success**: Exit code 0, all tests pass
+
+#### Forth (Gforth)
+- **Framework**: Custom test assertions
+- **Execution**: `gforth test_solution.fs`
+- **Success**: Exit code 0, all assertions passmultiple programming languages.
 
 ## Supported Languages
 
@@ -18,6 +23,7 @@ This document defines the standards and requirements for implementing Advent of 
 ### Extended Languages (Optional)
 - **Haskell** - Pure functional programming
 - **Lua** - Lightweight scripting
+- **Forth** - Stack-based programming with Gforth
 
 ## Directory Structure
 
@@ -48,6 +54,7 @@ YYYY/dayNN/
 - **Erlang**: `solution.erl`
 - **Haskell**: `solution.hs`
 - **Lua**: `solution.lua`
+- **Forth**: `solution.fs`
 
 ### Test Files
 - **Python**: `test_solution.py`
@@ -58,6 +65,7 @@ YYYY/dayNN/
 - **Erlang**: `test_solution.erl`
 - **Haskell**: `test_solution.hs`
 - **Lua**: `test_solution.lua`
+- **Forth**: `test_solution.fs`
 
 ## Input File Handling
 
@@ -199,6 +207,11 @@ Each test file must include:
 - **Style**: Follow Lua style conventions
 - **Libraries**: Standard library only
 
+### Forth (Gforth)
+- **Version**: Gforth 0.7+
+- **Style**: Standard Forth conventions
+- **Words**: Use standard and Gforth-specific words
+
 ## Quality Standards
 
 ### Code Quality
@@ -252,6 +265,7 @@ The test runner checks for these language runtimes:
 - `erl`, `erlc` - Erlang compiler and runtime
 - `ghc`, `runhaskell` - Glasgow Haskell Compiler
 - `lua` - Lua interpreter
+- `gforth` - Gforth interpreter
 
 ### Installation Verification
 Missing runtimes are reported but don't fail the test suite. This allows:

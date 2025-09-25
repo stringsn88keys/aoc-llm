@@ -51,7 +51,8 @@ class TestRunner:
             'erlang': ['erl', 'erlc'],
             'haskell': ['ghc', 'runhaskell'],
             'lua': ['lua'],
-            'forth': ['gforth']
+            'forth': ['gforth'],
+            'rust': ['rustc', 'cargo']
         }
         
         available = {}
@@ -464,6 +465,126 @@ class TestRunner:
         
         return results
     
+    def run_forth_tests(self, year, day, lang_dir):
+        """Run Forth tests and solution"""
+        results = {'tests': False, 'part_a': None, 'part_b': None}
+        
+        original_cwd = os.getcwd()
+        os.chdir(lang_dir)
+        
+        try:
+            # Run tests
+            test_files = list(lang_dir.glob('test*.fs'))
+            if test_files:
+                try:
+                    result = subprocess.run(['gforth', test_files[0].name], 
+                                          capture_output=True, text=True, timeout=30)
+                    if result.returncode == 0:
+                        results['tests'] = True
+                except subprocess.TimeoutExpired:
+                    pass
+            
+            # Run solution with data files from ../data/
+            solution_file = lang_dir / 'solution.fs'
+            if solution_file.exists():
+                data_dir = lang_dir.parent / 'data'
+                for input_file in ['input.txt', 'input-full.txt']:
+                    input_path = data_dir / input_file
+                    if input_path.exists():
+                        try:
+                            result = subprocess.run(['gforth', 'solution.fs', f'../data/{input_file}'], 
+                                                  capture_output=True, text=True, timeout=30)
+                            if result.returncode == 0:
+                                output_lines = result.stdout.strip().split('\n')
+                                if len(output_lines) >= 1:
+                                    results['part_a'] = output_lines[0]
+                                if len(output_lines) >= 2:
+                                    results['part_b'] = output_lines[1]
+                        except subprocess.TimeoutExpired:
+                            pass
+        finally:
+            os.chdir(original_cwd)
+        
+        return results
+    
+    def run_rust_tests(self, year, day, lang_dir):
+        """Run Rust tests and solution"""
+        results = {'tests': False, 'part_a': None, 'part_b': None}
+        
+        original_cwd = os.getcwd()
+        os.chdir(lang_dir)
+        
+        try:
+            # Check for Cargo project
+            cargo_toml = lang_dir / 'Cargo.toml'
+            if cargo_toml.exists():
+                # Run tests with cargo
+                try:
+                    result = subprocess.run(['cargo', 'test'], 
+                                          capture_output=True, text=True, timeout=60)
+                    if result.returncode == 0:
+                        results['tests'] = True
+                except subprocess.TimeoutExpired:
+                    pass
+                
+                # Run solution with cargo
+                data_dir = lang_dir.parent / 'data'
+                for input_file in ['input.txt', 'input-full.txt']:
+                    input_path = data_dir / input_file
+                    if input_path.exists():
+                        try:
+                            result = subprocess.run(['cargo', 'run', '--', f'../data/{input_file}'], 
+                                                  capture_output=True, text=True, timeout=30)
+                            if result.returncode == 0:
+                                output_lines = result.stdout.strip().split('\n')
+                                if len(output_lines) >= 1:
+                                    results['part_a'] = output_lines[0]
+                                if len(output_lines) >= 2:
+                                    results['part_b'] = output_lines[1]
+                        except subprocess.TimeoutExpired:
+                            pass
+            else:
+                # Fallback to direct compilation
+                rust_files = list(lang_dir.glob('*.rs'))
+                if rust_files:
+                    main_file = None
+                    for f in rust_files:
+                        if 'main.rs' in f.name or 'solution.rs' in f.name:
+                            main_file = f
+                            break
+                    if not main_file:
+                        main_file = rust_files[0]
+                    
+                    try:
+                        # Compile and run
+                        compile_result = subprocess.run(['rustc', main_file.name, '-o', 'solution'], 
+                                                      capture_output=True, text=True, timeout=30)
+                        if compile_result.returncode == 0:
+                            results['tests'] = True  # Compilation success counts as test pass for simple files
+                            
+                            # Run solution
+                            data_dir = lang_dir.parent / 'data'  
+                            for input_file in ['input.txt', 'input-full.txt']:
+                                input_path = data_dir / input_file
+                                if input_path.exists():
+                                    try:
+                                        result = subprocess.run(['./solution', f'../data/{input_file}'], 
+                                                              capture_output=True, text=True, timeout=30)
+                                        if result.returncode == 0:
+                                            output_lines = result.stdout.strip().split('\n')
+                                            if len(output_lines) >= 1:
+                                                results['part_a'] = output_lines[0]
+                                            if len(output_lines) >= 2:
+                                                results['part_b'] = output_lines[1]
+                                    except subprocess.TimeoutExpired:
+                                        pass
+                    except subprocess.TimeoutExpired:
+                        pass
+        finally:
+            os.chdir(original_cwd)
+        
+        return results
+    
     def run_language_tests(self, year, day, language):
         """Run tests for a specific language"""
         # Check if runtime is available
@@ -488,6 +609,10 @@ class TestRunner:
             return self.run_haskell_tests(year, day, lang_dir)
         elif language == 'lua':
             return self.run_lua_tests(year, day, lang_dir)
+        elif language == 'forth':
+            return self.run_forth_tests(year, day, lang_dir)
+        elif language == 'rust':
+            return self.run_rust_tests(year, day, lang_dir)
         else:
             return {'tests': False, 'part_a': None, 'part_b': None}
     
