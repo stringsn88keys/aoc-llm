@@ -11,6 +11,17 @@ def calculate_wrapping_paper(l : Int32, w : Int32, h : Int32) : Int32
   surface_area + smallest_side
 end
 
+def calculate_ribbon(l : Int32, w : Int32, h : Int32) : Int32
+  # Ribbon for wrapping: shortest distance around sides (smallest perimeter)
+  perimeters = [2*(l+w), 2*(w+h), 2*(h+l)]
+  wrapping_ribbon = perimeters.min
+  
+  # Ribbon for bow: volume of the present
+  bow_ribbon = l * w * h
+  
+  wrapping_ribbon + bow_ribbon
+end
+
 def parse_dimensions(line : String) : Array(Int32)
   # Parse a line like "2x3x4" into dimensions [2, 3, 4]
   line.strip.split('x').map(&.to_i)
@@ -31,13 +42,30 @@ def solve_part_a(filename : String) : Int32
   total_paper
 end
 
+def solve_part_b(filename : String) : Int32
+  total_ribbon = 0
+  
+  File.each_line(filename) do |line|
+    next if line.strip.empty?
+    
+    dimensions = parse_dimensions(line)
+    l, w, h = dimensions[0], dimensions[1], dimensions[2]
+    ribbon_needed = calculate_ribbon(l, w, h)
+    total_ribbon += ribbon_needed
+  end
+  
+  total_ribbon
+end
+
 def main
   # Determine input file
   filename = ARGV.size > 0 ? ARGV[0] : "../data/input.txt"
   
   begin
     total_paper = solve_part_a(filename)
+    total_ribbon = solve_part_b(filename)
     puts "The elves should order #{total_paper} square feet of wrapping paper"
+    puts "The elves should order #{total_ribbon} feet of ribbon"
   rescue File::NotFoundError
     puts "Error: File '#{filename}' not found."
     exit(1)

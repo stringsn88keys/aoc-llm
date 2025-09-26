@@ -37,6 +37,8 @@ The test runner supports the following programming languages:
 ### Extended Languages
 - **Haskell** (`.hs`) - Uses `ghc` compiler and `runhaskell`
 - **Lua** (`.lua`) - Uses `lua` interpreter
+- **Forth** (`.fs`) - Uses `gforth` interpreter
+- **Rust** (`.rs`) - Uses `rustc` compiler and `cargo test`
 - **APL** (`.apl`) - Uses GNU-APL `apl` interpreter
 
 ## Usage
@@ -118,6 +120,8 @@ Install any languages you want to test:
 #### Extended Languages
 - **Haskell**: Install GHC from [haskell.org](https://www.haskell.org/)
 - **Lua**: Install from [lua.org](https://www.lua.org/) or via package manager
+- **Forth**: Install Gforth from [gforth.org](https://gforth.org/) or via package manager
+- **Rust**: Install from [rust-lang.org](https://www.rust-lang.org/)
 - **APL**: Install GNU-APL via package manager (e.g., `brew install gnu-apl`)
 
 ### Installation Examples
@@ -128,7 +132,7 @@ Install any languages you want to test:
 brew install go ruby crystal elixir erlang
 
 # Extended languages  
-brew install ghc lua gnu-apl
+brew install ghc lua gforth rust gnu-apl
 ```
 
 **Ubuntu/Debian:**
@@ -137,7 +141,7 @@ brew install ghc lua gnu-apl
 sudo apt-get install golang-go ruby crystal elixir erlang
 
 # Extended languages
-sudo apt-get install ghc lua5.3 gnu-apl
+sudo apt-get install ghc lua5.3 gforth rustc cargo gnu-apl
 ```
 
 ## File Conventions
@@ -170,7 +174,14 @@ python3 solution.py ../data/input.txt
 ### Test Framework Requirements
 - **Python**: Use `unittest` framework
 - **Go**: Use built-in `testing` package
-- **Other languages**: Exit with code 0 for success, non-zero for failure
+- **Crystal**: Use `spec` framework
+- **Elixir**: Use `ExUnit` framework
+- **Erlang**: Use custom test runner
+- **Haskell**: Use `HUnit` or custom test framework
+- **Lua**: Use custom test framework
+- **Forth**: Use custom test assertions
+- **Rust**: Use built-in `#[test]` and `cargo test`
+- **APL**: Use custom test framework
 
 ## Features
 

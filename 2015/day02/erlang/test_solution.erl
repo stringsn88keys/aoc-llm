@@ -2,7 +2,7 @@
 -export([run_tests/0]).
 
 % Import the solution module functions
--import(solution, [calculate_wrapping_paper/3, parse_dimensions/1]).
+-import(solution, [calculate_wrapping_paper/3, calculate_ribbon/3, parse_dimensions/1]).
 
 % Simple test runner
 run_test(Name, Expected, Actual) ->
@@ -28,5 +28,13 @@ run_tests() ->
     run_test("Parse 2x3x4", {2, 3, 4}, parse_dimensions("2x3x4")),
     run_test("Parse 1x1x10", {1, 1, 10}, parse_dimensions("1x1x10")),
     run_test("Parse 100x200x300", {100, 200, 300}, parse_dimensions("100x200x300")),
+    
+    % Test calculate_ribbon with examples from instructions
+    run_test("Ribbon Example 1 (2x3x4 = 34)", 34, calculate_ribbon(2, 3, 4)),
+    run_test("Ribbon Example 2 (1x1x10 = 14)", 14, calculate_ribbon(1, 1, 10)),
+    
+    % Test ribbon edge cases
+    run_test("Ribbon Cube (2x2x2 = 16)", 16, calculate_ribbon(2, 2, 2)),
+    run_test("Ribbon Unit cube (1x1x1 = 5)", 5, calculate_ribbon(1, 1, 1)),
     
     io:format("All tests completed!~n").
