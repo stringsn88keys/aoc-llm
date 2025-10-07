@@ -30,7 +30,6 @@
 |----------|---------|-------|----------|---------|
 | Haskell  | `ghc` `runhaskell` | 🔧 Framework | 🔧 Example | 🟡 Ready for Implementation |
 | Lua      | `lua` | 🔧 Framework | 🔧 Framework | 🟡 Ready for Implementation |
-| APL      | `apl` (GNU-APL) | 🔧 Framework | 🔧 Framework | 🟡 Ready for Implementation |
 
 ### 4. **Test Runner Features**
 
@@ -46,7 +45,6 @@ Language Runtime Status
   Erlang       ✓ Available
   Haskell      ✗ Not Found      # Gracefully skipped
   Lua          ✓ Available
-  Apl          ✓ Available
 ```
 
 #### Smart Test Execution ✅
@@ -119,7 +117,7 @@ Part B (CONSISTENT): ✓
 - **Comprehensive Testing**: Full test coverage across all implementations
 
 ### **Framework Ready for Extensions**
-- **3 Additional Languages**: Haskell, Lua, APL support built-in
+- **2 Additional Languages**: Haskell, Lua support built-in
 - **Runtime Detection**: Automatic environment checking
 - **Graceful Degradation**: Missing languages don't break the suite
 
@@ -148,9 +146,6 @@ sudo apt-get install ghc           # Ubuntu
 brew install lua                    # macOS
 sudo apt-get install lua5.3        # Ubuntu
 
-# APL
-brew install gnu-apl               # macOS
-sudo apt-get install gnu-apl      # Ubuntu
 ```
 
 The system is now a robust, scalable platform for implementing and validating Advent of Code solutions across multiple programming languages with automatic quality assurance and consistency checking! 🎉

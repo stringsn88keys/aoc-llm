@@ -154,10 +154,6 @@ The first character that causes Santa to enter the basement is at position 1795
 - **Execution**: `lua test_solution.lua`
 - **Success**: Exit code 0, all tests pass
 
-#### APL (GNU-APL)
-- **Framework**: Custom test assertions
-- **Execution**: `apl -f test_solution.apl` or `apl < test_solution.apl`
-- **Success**: All assertions pass, proper output
 
 ### Test Coverage Requirements
 

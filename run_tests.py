@@ -676,15 +676,24 @@ class TestRunner:
                     self.results[year][day][language] = {'tests': False, 'part_a': None, 'part_b': None}
                     self.outputs[year][day][language] = {'tests': False, 'part_a': None, 'part_b': None}
     
-    def print_summary_table(self):
-        """Print a summary table of all results"""
+    def print_summary_table(self, table_width=120):
+        """Print a summary table of all results
+        
+        Args:
+            table_width (int): Total width of the table. Part A and Part B columns will be sized proportionally.
+        """
         print(f"\n\n{Colors.BOLD}Test Results Summary{Colors.END}")
-        print("=" * 80)
+        print("=" * table_width)
+        
+        # Calculate column widths based on total table width
+        # Reserve space for: Year/Day (12) + Language (10) + Tests (8) + Consistent (10) + separators (4) = 44
+        available_width = table_width - 44
+        part_a_width = part_b_width = available_width // 2
         
         # Header
-        header = f"{'Year/Day':<12} {'Language':<10} {'Tests':<8} {'Part A':<25} {'Part B':<25} {'Consistent':<10}"
+        header = f"{'Year/Day':<12} {'Language':<10} {'Tests':<8} {'Part A':<{part_a_width}} {'Part B':<{part_b_width}} {'Consistent':<10}"
         print(header)
-        print("-" * 80)
+        print("-" * table_width)
         
         for year in sorted(self.results.keys()):
             for day in sorted(self.results[year].keys()):
@@ -704,16 +713,17 @@ class TestRunner:
                     part_a = str(result['part_a']) if result['part_a'] is not None else "N/A"
                     part_b = str(result['part_b']) if result['part_b'] is not None else "N/A"
                     
-                    if len(part_a) > 20:
-                        part_a = part_a[:17] + "..."
-                    if len(part_b) > 20:
-                        part_b = part_b[:17] + "..."
+                    # Truncate based on calculated column width
+                    if len(part_a) > part_a_width - 3:  # Leave room for "..."
+                        part_a = part_a[:part_a_width - 3] + "..."
+                    if len(part_b) > part_b_width - 3:  # Leave room for "..."
+                        part_b = part_b[:part_b_width - 3] + "..."
                     
                     # Show year/day only for first language
                     year_day = f"{year}/{day}" if i == 0 else ""
                     consistency_col = consistency_symbol if i == 0 else ""
                     
-                    print(f"{year_day:<12} {language:<10} {test_status:<15} {part_a:<25} {part_b:<25} {consistency_col:<10}")
+                    print(f"{year_day:<12} {language:<10} {test_status:<15} {part_a:<{part_a_width}} {part_b:<{part_b_width}} {consistency_col:<10}")
     
     def print_detailed_outputs(self):
         """Print detailed outputs for consistency checking"""
@@ -759,12 +769,23 @@ def main():
     """Main function"""
     runner = TestRunner()
     
+    # Check for width argument
+    table_width = 120  # Default width
+    if len(sys.argv) > 1:
+        try:
+            table_width = int(sys.argv[1])
+            if table_width < 80:
+                print(f"{Colors.YELLOW}Warning: Table width {table_width} is very narrow. Minimum recommended width is 80.{Colors.END}")
+        except ValueError:
+            print(f"{Colors.RED}Error: Invalid table width '{sys.argv[1]}'. Using default width of 120.{Colors.END}")
+    
     try:
         runner.run_all_tests()
-        runner.print_summary_table()
+        runner.print_summary_table(table_width)
         runner.print_detailed_outputs()
         
         print(f"\n{Colors.BOLD}Test run complete!{Colors.END}")
+        print(f"Table width used: {table_width}")
         
     except KeyboardInterrupt:
         print(f"\n{Colors.YELLOW}Test run interrupted by user{Colors.END}")

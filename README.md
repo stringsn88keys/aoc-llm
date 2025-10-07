@@ -39,7 +39,6 @@ The test runner supports the following programming languages:
 - **Lua** (`.lua`) - Uses `lua` interpreter
 - **Forth** (`.fs`) - Uses `gforth` interpreter
 - **Rust** (`.rs`) - Uses `rustc` compiler and `cargo test`
-- **APL** (`.apl`) - Uses GNU-APL `apl` interpreter
 
 ## Usage
 
@@ -122,7 +121,6 @@ Install any languages you want to test:
 - **Lua**: Install from [lua.org](https://www.lua.org/) or via package manager
 - **Forth**: Install Gforth from [gforth.org](https://gforth.org/) or via package manager
 - **Rust**: Install from [rust-lang.org](https://www.rust-lang.org/)
-- **APL**: Install GNU-APL via package manager (e.g., `brew install gnu-apl`)
 
 ### Installation Examples
 
@@ -132,7 +130,7 @@ Install any languages you want to test:
 brew install go ruby crystal elixir erlang
 
 # Extended languages  
-brew install ghc lua gforth rust gnu-apl
+brew install ghc lua gforth rust
 ```
 
 **Ubuntu/Debian:**
@@ -141,7 +139,7 @@ brew install ghc lua gforth rust gnu-apl
 sudo apt-get install golang-go ruby crystal elixir erlang
 
 # Extended languages
-sudo apt-get install ghc lua5.3 gforth rustc cargo gnu-apl
+sudo apt-get install ghc lua5.3 gforth rustc cargo
 ```
 
 ## File Conventions
@@ -181,7 +179,6 @@ python3 solution.py ../data/input.txt
 - **Lua**: Use custom test framework
 - **Forth**: Use custom test assertions
 - **Rust**: Use built-in `#[test]` and `cargo test`
-- **APL**: Use custom test framework
 
 ## Features
 

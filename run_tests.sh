@@ -42,7 +42,6 @@ check_lang "elixir" "elixir"
 check_lang "erlang" "erl"
 check_lang "haskell" "ghc"
 check_lang "lua" "lua"
-check_lang "apl" "apl"
 
 echo ""
 echo "Running comprehensive test suite..."
@@ -52,9 +51,13 @@ echo "  2. Execute full solutions with real input"
 echo "  3. Compare outputs across languages for consistency"
 echo "  4. Generate a detailed report"
 echo ""
+echo "Usage: $0 [table_width]"
+echo "  table_width: Optional width for the summary table (default: 120)"
+echo "  Example: $0 160  # Use wider table"
+echo ""
 
-# Run the Python test runner
-python3 run_tests.py
+# Run the Python test runner with all arguments passed through
+python3 run_tests.py "$@"
 
 exit_code=$?
 
